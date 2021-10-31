@@ -1,10 +1,16 @@
 # ImageHub
 
-Movie app powerd by react in the frontend, redux for state management ,firebase for authentication and storing favourite movies and TMDB API for fetching movies🔥
+Finding places to get a quick link for the images which recide on your local computer? Try ImageHub and get links for your images in three steps
 
-[Demo](https://firemovies.netlify.app)
+1. Do a quick Login/Signup
 
-![Screenshot 2021-07-31 at 20-18-29 Fire Movies](https://user-images.githubusercontent.com/62604902/127743716-a938493a-e865-44b0-8b1b-8bd903dca000.png)
+2. Upload Images from computer
+
+3. Get links and share it to the world
+
+[Demo](https://react-image-hub.netlify.app)
+
+![Screenshot 2021-10-31 at 14-17-22 Image Hub](https://user-images.githubusercontent.com/62604902/139575009-83d21502-9383-4f04-bbc3-030374435a18.png)
 
 ## Installation
 
