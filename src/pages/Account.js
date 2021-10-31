@@ -44,14 +44,14 @@ const Account = () => {
           <Typography>{user?.user?.email}</Typography>
         </Grid>
       </Grid>
-      <hr style={{ marginTop: '5rem' }} />
+      <hr style={{ marginTop: matches ? '2rem' : '5rem' }} />
       <AccountImages />
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={open}
         onClose={handleClose}
         message='Tap on the images to get links'
-        autoHideDuration={4000}
+        autoHideDuration={2000}
       />
     </Container>
   );

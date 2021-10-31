@@ -16,10 +16,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useHistory } from 'react-router';
-import { useTheme } from '@mui/system';
 import { AuthContext } from '../../context/auth/AuthState';
 import { ModalContext } from '../../context/modal/ModalState';
 import ModalComp from './ModalComp';
@@ -33,8 +30,6 @@ const NavBar = () => {
   const history = useHistory();
 
   const [open, setOpen] = React.useState(false);
-
-  const theme = useTheme();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -77,22 +72,14 @@ const NavBar = () => {
                 boxSizing: 'border-box',
               },
             }}
-            variant='persistent'
             anchor='left'
             open={open}
             onClose={handleDrawerClose}
           >
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'ltr' ? (
-                <ChevronLeftIcon />
-              ) : (
-                <ChevronRightIcon />
-              )}
-            </IconButton>
             <List>
               {user && (
                 <>
-                  <ListItem>
+                  <ListItem onClick={handleDrawerClose}>
                     <Link to='/' className='my-link2'>
                       <Button color='inherit'>Home</Button>
                     </Link>
@@ -106,7 +93,7 @@ const NavBar = () => {
                       Upload
                     </Button>
                   </ListItem>
-                  <ListItem>
+                  <ListItem onClick={handleDrawerClose}>
                     <Link to='/account' className='my-link2'>
                       <Button color='inherit'>Account</Button>
                     </Link>
@@ -122,20 +109,13 @@ const NavBar = () => {
                       LOGOUT
                     </Button>
                   </ListItem>
-                  <ListItem>
-                    <Link to='/about' className='my-link2'>
-                      <Button color='inherit'>About</Button>
-                    </Link>
-                  </ListItem>
                 </>
               )}
-              <List>
-                <ListItem>
-                  <Link to='/about' className='my-link2'>
-                    <Button color='inherit'>About</Button>
-                  </Link>
-                </ListItem>
-              </List>
+              <ListItem onClick={handleDrawerClose}>
+                <Link to='/about' className='my-link2'>
+                  <Button color='inherit'>About</Button>
+                </Link>
+              </ListItem>
             </List>
           </Drawer>
         </>
