@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+body {
+  margin: 0;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 100vh !important;
+}
+
+.my-link {
+  text-decoration: none;
+  color: #fff;
+  margin-right: 1.5rem;
+}
+.my-link2 {
+  text-decoration: none;
+  color: black;
+  margin-right: 1.5rem;
+}
+
+.logo {
+  height: 60px;
+}
+
+.f-icon {
+  color: #fff !important;
+  font-size: 1.8rem !important;
+  margin: 0 0.5rem;
+}
+
+.my-footer {
+  margin-top: auto !important;
+}
+
+@media (max-width: 600px) {
+  .MuiImageList-root {
+    border: 1px solid red !important;
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+}
