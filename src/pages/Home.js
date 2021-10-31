@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useContext } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import { ImageContext } from '../context/images/ImageState';
+import Spinner from '../components/utility/Spinner';
 
 const Home = () => {
   const { getPublicImages, publicImages, loading } = useContext(ImageContext);
@@ -14,6 +15,7 @@ const Home = () => {
 
   return (
     <Container sx={{ mt: '5rem' }}>
+      {publicImages.length === 0 && <Spinner />}
       {publicImages.map((item) => {
         return (
           <Card
@@ -48,7 +50,7 @@ const Home = () => {
             />
             {loading ? (
               <Skeleton
-                sx={{ height: 190 }}
+                sx={{ height: 350 }}
                 animation='wave'
                 variant='rectangular'
               />

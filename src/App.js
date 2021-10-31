@@ -10,6 +10,7 @@ import { useContext } from 'react';
 import { AuthContext } from './context/auth/AuthState';
 import ImageDetails from './pages/ImageDetails';
 import Footer from './components/utility/Footer';
+import Error from './pages/Error';
 
 const App = () => {
   const { user } = useContext(AuthContext);
@@ -33,6 +34,7 @@ const App = () => {
           <Route path='/account' component={Account} />
           <Route path='/image/:id' component={ImageDetails} />
           <Route path='/about' component={About} />
+          <Route path='*' component={Error} />
         </Switch>
         <Footer />
       </ThemeProvider>

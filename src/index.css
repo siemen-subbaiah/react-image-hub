@@ -1,10 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
   margin: 0;
-  display: flex !important;
-  flex-direction: column !important;
-  min-height: 100vh !important;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
 }
 
 .my-link {
@@ -29,7 +37,7 @@ body {
 }
 
 .my-footer {
-  margin-top: auto !important;
+  margin-top: auto;
 }
 
 @media (max-width: 600px) {

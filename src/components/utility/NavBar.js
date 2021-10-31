@@ -104,6 +104,7 @@ const NavBar = () => {
                       onClick={() => {
                         logout();
                         history.push('/');
+                        handleDrawerClose();
                       }}
                     >
                       LOGOUT
