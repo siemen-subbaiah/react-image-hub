@@ -1,10 +1,10 @@
 # ImageHub
 
-Finding places to get a quick link for the images which recide on your local computer? Try ImageHub and get links for your images in three steps
+Finding places to get a quick link for the images which recide on your local computer? Try ImageHub and get links for your images in three steps:
 
 1. Do a quick Login/Signup
 
-2. Upload Images from computer
+2. Upload Images from your computer
 
 3. Get links and share it to the world
 
