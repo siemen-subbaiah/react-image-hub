@@ -170,7 +170,7 @@ const NavBar = () => {
           </Container>
         </AppBar>
       )}
-      {modOpen && <ModalComp />}
+      {modOpen && <ModalComp handleDrawerClose={handleDrawerClose} />}
     </>
   );
 };

@@ -21,7 +21,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import { useTheme } from '@mui/material/styles';
 import MobileStepper from '@mui/material/MobileStepper';
 
-const ModalComp = () => {
+const ModalComp = ({ handleDrawerClose }) => {
   const matches = useMediaQuery('(max-width:600px)');
 
   const { modOpen, handleClose } = useContext(ModalContext);
@@ -52,6 +52,7 @@ const ModalComp = () => {
     if (imageUpload) {
       uploadPost(user?.user?.username, imageUpload, checked);
       handleClose();
+      handleDrawerClose();
       history.push('/account');
     } else {
       alert('please add the image!');
@@ -151,6 +152,7 @@ const ModalComp = () => {
                   variant='contained'
                   color='primary'
                   sx={{ my: '0.5rem' }}
+                  disabled={imageUpload}
                   onClick={handleUpload}
                 >
                   Add image

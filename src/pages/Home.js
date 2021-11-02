@@ -4,8 +4,11 @@ import { useContext } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import { ImageContext } from '../context/images/ImageState';
 import Spinner from '../components/utility/Spinner';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Home = () => {
+  const matches = useMediaQuery('(max-width:600px)');
+
   const { getPublicImages, publicImages, loading } = useContext(ImageContext);
 
   useEffect(() => {
@@ -14,7 +17,7 @@ const Home = () => {
   }, []);
 
   return (
-    <Container sx={{ mt: '5rem' }}>
+    <Container sx={{ mt: matches ? '5rem' : '0rem' }}>
       {publicImages.length === 0 && <Spinner />}
       {publicImages.map((item) => {
         return (
