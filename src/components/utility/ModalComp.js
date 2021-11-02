@@ -16,6 +16,10 @@ import Backdrop from '@mui/material/Backdrop';
 import { AuthContext } from '../../context/auth/AuthState';
 import { useHistory } from 'react-router';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import { useTheme } from '@mui/material/styles';
+import MobileStepper from '@mui/material/MobileStepper';
 
 const ModalComp = () => {
   const matches = useMediaQuery('(max-width:600px)');
@@ -44,8 +48,29 @@ const ModalComp = () => {
     }
   };
 
+  const handleUploadingPost = () => {
+    if (imageUpload) {
+      uploadPost(user?.user?.username, imageUpload, checked);
+      handleClose();
+      history.push('/account');
+    } else {
+      alert('please add the image!');
+    }
+  };
+
   const handleFileChange = (e) => {
     setImage(e.target.files[0]);
+  };
+
+  const theme = useTheme();
+  const [activeStep, setActiveStep] = React.useState(0);
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   const style = {
@@ -77,81 +102,123 @@ const ModalComp = () => {
             Upload Photo
           </Typography>
           <form>
-            <div className='d-flex justify-content-center'>
-              <label htmlFor='contained-button-file' className='upload-file'>
-                <span
-                  className='MuiButtonBase-root MuiFab-root upload-file__icon'
-                  tabIndex='0'
-                  role='button'
-                  aria-disabled='false'
-                >
-                  <span className='MuiFab-label'>
-                    <AddPhotoAlternateIcon className='file-upload' />
-                  </span>
-                  <span className='MuiTouchRipple-root'></span>
-                </span>
-              </label>
-              <input
-                id='contained-button-file'
-                name='contained-button-file'
-                type='file'
-                style={{ display: 'none' }}
-                onChange={handleFileChange}
-              ></input>
-            </div>
+            {activeStep === 0 ? (
+              <>
+                <div className='d-flex justify-content-center'>
+                  <label
+                    htmlFor='contained-button-file'
+                    className='upload-file'
+                  >
+                    <span
+                      className='MuiButtonBase-root MuiFab-root upload-file__icon'
+                      tabIndex='0'
+                      role='button'
+                      aria-disabled='false'
+                    >
+                      <span className='MuiFab-label'>
+                        <AddPhotoAlternateIcon className='file-upload' />
+                      </span>
+                      <span className='MuiTouchRipple-root'></span>
+                    </span>
+                  </label>
+                  <input
+                    id='contained-button-file'
+                    name='contained-button-file'
+                    type='file'
+                    style={{ display: 'none' }}
+                    onChange={handleFileChange}
+                  ></input>
+                  <Typography fontSize='0.7rem'>{image?.name}</Typography>
+                </div>
 
-            {upLoading ? (
-              <Typography>loading...</Typography>
+                {upLoading ? (
+                  <Typography>loading...</Typography>
+                ) : (
+                  <>
+                    {imageUpload !== null && (
+                      <Box>
+                        <img
+                          src={imageUpload[0].url}
+                          alt='upload-img'
+                          style={{ height: '200px' }}
+                        />
+                      </Box>
+                    )}
+                  </>
+                )}
+                <Button
+                  type='submit'
+                  variant='contained'
+                  color='primary'
+                  sx={{ my: '0.5rem' }}
+                  onClick={handleUpload}
+                >
+                  Add image
+                </Button>
+              </>
             ) : (
               <>
-                {imageUpload !== null && (
-                  <Box>
-                    <img
-                      src={imageUpload[0].url}
-                      alt='upload-img'
-                      style={{ height: '200px' }}
-                    />
-                  </Box>
-                )}
+                <Box sx={{ width: matches ? '50%' : '25%', m: 'auto' }}>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={checked}
+                          onChange={(e) => setChecked(e.target.checked)}
+                          inputProps={{ 'aria-label': 'controlled' }}
+                        />
+                      }
+                      label='Public'
+                    ></FormControlLabel>
+                  </FormGroup>
+                </Box>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  sx={{ my: '0.5rem' }}
+                  fullWidth
+                  onClick={handleUploadingPost}
+                >
+                  Upload
+                </Button>
               </>
             )}
-            <Button
-              type='submit'
-              variant='contained'
-              color='primary'
-              sx={{ my: '0.5rem' }}
-              onClick={handleUpload}
-            >
-              Add image
-            </Button>
-            <Box sx={{ width: matches ? '50%' : '25%', m: 'auto' }}>
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={checked}
-                      onChange={(e) => setChecked(e.target.checked)}
-                      inputProps={{ 'aria-label': 'controlled' }}
-                    />
-                  }
-                  label='Public'
-                ></FormControlLabel>
-              </FormGroup>
-            </Box>
-            <Button
-              variant='contained'
-              color='primary'
-              sx={{ my: '0.5rem' }}
-              fullWidth
-              onClick={() => {
-                uploadPost(user?.user?.username, imageUpload, checked);
-                handleClose();
-                history.push('/account');
-              }}
-            >
-              Upload
-            </Button>
           </form>
+          <MobileStepper
+            variant='dots'
+            steps={2}
+            position='static'
+            activeStep={activeStep}
+            sx={{ maxWidth: 400, flexGrow: 1 }}
+            nextButton={
+              <Button
+                size='small'
+                onClick={handleNext}
+                disabled={activeStep === 5}
+              >
+                Next
+                {theme.direction === 'rtl' ? (
+                  <KeyboardArrowLeft />
+                ) : (
+                  <KeyboardArrowRight />
+                )}
+              </Button>
+            }
+            backButton={
+              <Button
+                size='small'
+                onClick={handleBack}
+                disabled={activeStep === 0}
+              >
+                {theme.direction === 'rtl' ? (
+                  <KeyboardArrowRight />
+                ) : (
+                  <KeyboardArrowLeft />
+                )}
+                Back
+              </Button>
+            }
+          />
         </Box>
       </Fade>
     </Modal>
