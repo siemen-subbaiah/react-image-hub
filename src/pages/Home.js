@@ -1,10 +1,18 @@
-import { Avatar, Card, CardHeader, CardMedia, Container } from '@mui/material';
+import {
+  Avatar,
+  Card,
+  CardHeader,
+  CardMedia,
+  Container,
+  Typography,
+} from '@mui/material';
 import React, { useEffect } from 'react';
 import { useContext } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import { ImageContext } from '../context/images/ImageState';
 import Spinner from '../components/utility/Spinner';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const matches = useMediaQuery('(max-width:600px)');
@@ -18,6 +26,14 @@ const Home = () => {
 
   return (
     <Container sx={{ mt: matches ? '5rem' : '0rem' }}>
+      <Typography
+        sx={{ my: '2rem' }}
+        component='h1'
+        variant='h5'
+        align='center'
+      >
+        Publicly shared posts
+      </Typography>
       {publicImages.length === 0 && <Spinner />}
       {publicImages.map((item) => {
         return (
@@ -58,13 +74,15 @@ const Home = () => {
                 variant='rectangular'
               />
             ) : (
-              <CardMedia
-                component='img'
-                // height='194'
-                image={item?.image?.url}
-                alt={item?.username}
-                sx={{ width: '100%' }}
-              />
+              <Link to={`/image/${item.id}`}>
+                <CardMedia
+                  component='img'
+                  // height='194'
+                  image={item?.image?.url}
+                  alt={item?.username}
+                  sx={{ width: '100%' }}
+                />
+              </Link>
             )}
           </Card>
         );

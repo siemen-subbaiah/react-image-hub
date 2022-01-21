@@ -35,6 +35,7 @@ import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+import { AuthContext } from '../context/auth/AuthState';
 
 const ImageDetails = () => {
   const matches = useMediaQuery('(max-width:600px)');
@@ -62,6 +63,12 @@ const ImageDetails = () => {
     status,
     editImage,
   } = useContext(ImageContext);
+
+  const {
+    user: {
+      user: { username },
+    },
+  } = useContext(AuthContext);
 
   const [open, setOpen] = React.useState(false);
   const [checked, setChecked] = React.useState();
@@ -145,14 +152,16 @@ const ImageDetails = () => {
         >
           <CardHeader
             action={
-              <IconButton
-                onClick={() => {
-                  handleMainClickOpen();
-                  setCurrent(imageDetails.isPublic);
-                }}
-              >
-                <MoreHorizIcon />
-              </IconButton>
+              username === imageDetails.username && (
+                <IconButton
+                  onClick={() => {
+                    handleMainClickOpen();
+                    setCurrent(imageDetails.isPublic);
+                  }}
+                >
+                  <MoreHorizIcon />
+                </IconButton>
+              )
             }
           />
           <Grid

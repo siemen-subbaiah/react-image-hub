@@ -42,115 +42,120 @@ const FormComp = () => {
   };
 
   return (
-    <Box sx={styles}>
-      {isError && (
-        <Alert sx={{ my: '1rem' }} severity='error'>
-          {errorText}
-        </Alert>
-      )}
-      {toggle ? (
-        <form onSubmit={handleLogin}>
-          <TextField
-            label='Email'
-            variant='outlined'
-            color='primary'
-            margin='normal'
-            fullWidth
-            name='email'
-            type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            label='Password'
-            variant='outlined'
-            color='primary'
-            margin='normal'
-            fullWidth
-            name='password'
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button
-            type='submit'
-            color='primary'
-            variant='contained'
-            fullWidth
-            disabled={loading}
-            sx={{ my: '0.5rem' }}
-          >
-            Login
-          </Button>
-        </form>
-      ) : (
-        <form onSubmit={handleSignUp}>
-          <TextField
-            label='Name'
-            variant='outlined'
-            color='primary'
-            fullWidth
-            name='name'
-            type='text'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <TextField
-            label='Email'
-            variant='outlined'
-            color='primary'
-            margin='normal'
-            fullWidth
-            name='email'
-            type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            label='Password'
-            variant='outlined'
-            color='primary'
-            margin='normal'
-            fullWidth
-            name='password'
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button
-            color='primary'
-            variant='contained'
-            fullWidth
-            type='submit'
-            sx={{ my: '0.5rem' }}
-            disabled={loading}
-          >
-            Signup
-          </Button>
-        </form>
-      )}
-      {toggle ? (
-        <Typography sx={{ textAlign: 'center' }}>
-          Do not an account?{' '}
-          <span
-            onClick={() => setToggle(false)}
-            style={{ color: '#29AEFA', cursor: 'pointer' }}
-          >
-            Signup
-          </span>
-        </Typography>
-      ) : (
-        <Typography sx={{ textAlign: 'center' }}>
-          Already have an account?{' '}
-          <span
-            onClick={() => setToggle(true)}
-            style={{ color: '#29AEFA', cursor: 'pointer' }}
-          >
-            Login
-          </span>
-        </Typography>
-      )}
-    </Box>
+    <>
+      <Box sx={styles}>
+        {isError && (
+          <Alert sx={{ my: '1rem' }} severity='error'>
+            {errorText}
+          </Alert>
+        )}
+        {toggle ? (
+          <form onSubmit={handleLogin}>
+            <TextField
+              label='Email'
+              variant='outlined'
+              color='primary'
+              margin='normal'
+              fullWidth
+              name='email'
+              type='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              label='Password'
+              variant='outlined'
+              color='primary'
+              margin='normal'
+              fullWidth
+              name='password'
+              type='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button
+              type='submit'
+              color='primary'
+              variant='contained'
+              fullWidth
+              disabled={loading}
+              sx={{ my: '0.5rem' }}
+            >
+              Login
+            </Button>
+          </form>
+        ) : (
+          <form onSubmit={handleSignUp}>
+            <TextField
+              label='Name'
+              variant='outlined'
+              color='primary'
+              fullWidth
+              name='name'
+              type='text'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <TextField
+              label='Email'
+              variant='outlined'
+              color='primary'
+              margin='normal'
+              fullWidth
+              name='email'
+              type='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              label='Password'
+              variant='outlined'
+              color='primary'
+              margin='normal'
+              fullWidth
+              name='password'
+              type='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button
+              color='primary'
+              variant='contained'
+              fullWidth
+              type='submit'
+              sx={{ my: '0.5rem' }}
+              disabled={loading}
+            >
+              Signup
+            </Button>
+          </form>
+        )}
+        {toggle ? (
+          <Typography sx={{ textAlign: 'center' }}>
+            Do not an account?{' '}
+            <span
+              onClick={() => setToggle(false)}
+              style={{ color: '#29AEFA', cursor: 'pointer' }}
+            >
+              Signup
+            </span>
+          </Typography>
+        ) : (
+          <Typography sx={{ textAlign: 'center' }}>
+            Already have an account?{' '}
+            <span
+              onClick={() => setToggle(true)}
+              style={{ color: '#29AEFA', cursor: 'pointer' }}
+            >
+              Login
+            </span>
+          </Typography>
+        )}
+      </Box>
+      <Typography sx={{ textAlign: 'center', my: '1rem' }}>
+        The initial load may be slow because of heroku's dynos
+      </Typography>
+    </>
   );
 };
 
