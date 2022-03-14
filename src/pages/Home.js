@@ -32,7 +32,7 @@ const Home = () => {
         variant='h5'
         align='center'
       >
-        Publicly shared posts
+        Publicly shared images
       </Typography>
       {publicImages.length === 0 && <Spinner />}
       {publicImages.map((item) => {

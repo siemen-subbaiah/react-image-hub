@@ -49,7 +49,7 @@ const FormComp = () => {
             {errorText}
           </Alert>
         )}
-        {toggle ? (
+        {!toggle ? (
           <form onSubmit={handleLogin}>
             <TextField
               label='Email'
@@ -82,6 +82,17 @@ const FormComp = () => {
               sx={{ my: '0.5rem' }}
             >
               Login
+            </Button>
+            <Button
+              type='submit'
+              color='primary'
+              variant='contained'
+              fullWidth
+              disabled={loading}
+              sx={{ my: '0.5rem' }}
+              onClick={() => login('johndoe@gmail.com', 'johndoe123')}
+            >
+              Login as Guest
             </Button>
           </form>
         ) : (
@@ -130,7 +141,7 @@ const FormComp = () => {
             </Button>
           </form>
         )}
-        {toggle ? (
+        {!toggle ? (
           <Typography sx={{ textAlign: 'center' }}>
             Do not an account?{' '}
             <span

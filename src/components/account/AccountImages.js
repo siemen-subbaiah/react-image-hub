@@ -17,7 +17,7 @@ const AccountImages = () => {
       {images.length === 0 && (
         <Typography sx={{ textAlign: 'center' }}>No Uploads Yet</Typography>
       )}
-      <Grid container sx={{ my: '1rem' }} columnSpacing={3}>
+      <Grid container sx={{ my: '2rem' }} columnSpacing={3}>
         {images?.map((item, i) => (
           <Grid item xs={12} lg={4} md={6} key={i}>
             {loading ? (
