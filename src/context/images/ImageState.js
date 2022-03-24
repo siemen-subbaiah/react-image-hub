@@ -83,6 +83,25 @@ const ImageState = ({ children }) => {
     }
   };
 
+  const deleteUploadedImage = async (id) => {
+    dispatch({ type: 'UPLOAD_LOADING' });
+    try {
+      const res = await fetch(
+        `https://quiet-springs-07494.herokuapp.com/upload/files/${id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${user.jwt}`,
+          },
+        }
+      );
+      const data = await res.json();
+      dispatch({ type: 'DELETE_UPLOADED_IMAGE', payload: data });
+    } catch (error) {
+      dispatch({ type: 'ERROR', payload: error });
+    }
+  };
+
   const uploadPost = async (username, image, isPublic) => {
     dispatch({ type: 'LOADING' });
     try {
@@ -151,6 +170,7 @@ const ImageState = ({ children }) => {
         getSingleImages,
         getPublicImages,
         uploadImage,
+        deleteUploadedImage,
         uploadPost,
         deleteImage,
         setCurrent,

@@ -56,6 +56,13 @@ export const reducer = (state, action) => {
         upLoading: false,
         Iserror: false,
       };
+    case 'DELETE_UPLOADED_IMAGE':
+      return {
+        ...state,
+        imageUpload: null,
+        upLoading: false,
+        Iserror: false,
+      };
     case 'UPLOAD_POST':
       return {
         ...state,

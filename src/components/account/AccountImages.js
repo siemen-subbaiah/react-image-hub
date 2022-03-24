@@ -27,18 +27,28 @@ const AccountImages = () => {
                 variant='rectangular'
               />
             ) : (
-              <Link to={`/image/${item.id}`}>
-                <img
-                  src={item.image.url}
-                  alt={item.username}
-                  loading='lazy'
-                  style={{
-                    height: '350px',
-                    maxWidth: '100%',
-                    objectFit: 'contain',
-                  }}
-                />
-              </Link>
+              <div
+                style={{
+                  backgroundColor: 'white',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  margin: '1rem 0',
+                  boxShadow: '10px 10px 30px rgba(0,0,0,0.1)',
+                }}
+              >
+                <Link to={`/image/${item.id}`}>
+                  <img
+                    src={item.image.url}
+                    alt={item.username}
+                    loading='lazy'
+                    style={{
+                      height: '350px',
+                      maxWidth: '100%',
+                      objectFit: 'contain',
+                    }}
+                  />
+                </Link>
+              </div>
             )}
           </Grid>
         ))}

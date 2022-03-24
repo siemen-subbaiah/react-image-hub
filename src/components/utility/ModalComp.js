@@ -7,46 +7,34 @@ import {
   Switch,
   Typography,
 } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import { Box } from '@mui/system';
 import React, { useContext, useState } from 'react';
 import { ModalContext } from '../../context/modal/ModalState';
 import { ImageContext } from '../../context/images/ImageState';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Backdrop from '@mui/material/Backdrop';
 import { AuthContext } from '../../context/auth/AuthState';
 import { useHistory } from 'react-router';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import { useTheme } from '@mui/material/styles';
-import MobileStepper from '@mui/material/MobileStepper';
 
 const ModalComp = ({ handleDrawerClose }) => {
   const matches = useMediaQuery('(max-width:600px)');
 
   const { modOpen, handleClose } = useContext(ModalContext);
-  const { uploadImage, imageUpload, uploadPost, upLoading } =
-    useContext(ImageContext);
+  const {
+    uploadImage,
+    imageUpload,
+    uploadPost,
+    upLoading,
+    deleteUploadedImage,
+  } = useContext(ImageContext);
   const { user } = useContext(AuthContext);
-  const [image, setImage] = useState(null);
 
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = useState(false);
 
   const history = useHistory();
-
-  const formData = new FormData();
-  formData.append('files', image);
-  formData.append('ref', 'images');
-  formData.append('field', 'image');
-
-  const handleUpload = (e) => {
-    e.preventDefault();
-    if (image) {
-      uploadImage(formData);
-    } else {
-      alert('please add the image!');
-    }
-  };
 
   const handleUploadingPost = () => {
     if (imageUpload) {
@@ -60,18 +48,12 @@ const ModalComp = ({ handleDrawerClose }) => {
   };
 
   const handleFileChange = (e) => {
-    setImage(e.target.files[0]);
-  };
+    const formData = new FormData();
+    formData.append('files', e.target.files[0]);
+    formData.append('ref', 'images');
+    formData.append('field', 'image');
 
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    uploadImage(formData);
   };
 
   const style = {
@@ -99,128 +81,106 @@ const ModalComp = ({ handleDrawerClose }) => {
     >
       <Fade in={modOpen}>
         <Box sx={style} textAlign='center'>
-          <Typography id='transition-modal-title' variant='h6' component='h2'>
+          <Typography
+            id='transition-modal-title'
+            variant='h6'
+            component='h2'
+            sx={{ my: '0.5rem' }}
+          >
             Upload Photo
           </Typography>
           <form>
-            {activeStep === 0 ? (
-              <>
-                <div className='d-flex justify-content-center'>
-                  <label
-                    htmlFor='contained-button-file'
-                    className='upload-file'
-                  >
-                    <span
-                      className='MuiButtonBase-root MuiFab-root upload-file__icon'
-                      tabIndex='0'
-                      role='button'
-                      aria-disabled='false'
-                    >
-                      <span className='MuiFab-label'>
-                        <AddPhotoAlternateIcon className='file-upload' />
-                      </span>
-                      <span className='MuiTouchRipple-root'></span>
-                    </span>
-                  </label>
-                  <input
-                    id='contained-button-file'
-                    name='contained-button-file'
-                    type='file'
-                    style={{ display: 'none' }}
-                    onChange={handleFileChange}
-                  ></input>
-                  <Typography fontSize='0.7rem'>{image?.name}</Typography>
-                </div>
-
-                {upLoading ? (
-                  <Typography>loading...</Typography>
+            <>
+              <div className='d-flex justify-content-center'>
+                {imageUpload ? (
+                  <DeleteIcon
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => deleteUploadedImage(imageUpload[0]?.id)}
+                  />
                 ) : (
                   <>
-                    {imageUpload !== null && (
-                      <Box>
-                        <img
-                          src={imageUpload[0].url}
-                          alt='upload-img'
-                          style={{ height: '200px' }}
-                        />
-                      </Box>
-                    )}
+                    <label
+                      htmlFor='contained-button-file'
+                      className='upload-file'
+                    >
+                      <span
+                        className='MuiButtonBase-root MuiFab-root upload-file__icon'
+                        tabIndex='0'
+                        role='button'
+                        aria-disabled='false'
+                      >
+                        <span className='MuiFab-label'>
+                          <AddPhotoAlternateIcon
+                            className='file-upload'
+                            fontSize='large'
+                          />
+                        </span>
+                        <span className='MuiTouchRipple-root'></span>
+                      </span>
+                    </label>
+                    <input
+                      id='contained-button-file'
+                      name='contained-button-file'
+                      type='file'
+                      style={{ display: 'none' }}
+                      onChange={handleFileChange}
+                    ></input>
                   </>
                 )}
-                <Button
-                  type='submit'
-                  variant='contained'
-                  color='primary'
-                  sx={{ my: '0.5rem' }}
-                  disabled={imageUpload}
-                  onClick={handleUpload}
-                >
-                  Add image
-                </Button>
-              </>
-            ) : (
-              <>
-                <Box sx={{ width: matches ? '50%' : '25%', m: 'auto' }}>
-                  <FormGroup>
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          checked={checked}
-                          onChange={(e) => setChecked(e.target.checked)}
-                          inputProps={{ 'aria-label': 'controlled' }}
-                        />
-                      }
-                      label='Public'
-                    ></FormControlLabel>
-                  </FormGroup>
-                </Box>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  sx={{ my: '0.5rem' }}
-                  fullWidth
-                  onClick={handleUploadingPost}
-                >
-                  Upload
-                </Button>
-              </>
-            )}
+              </div>
+
+              {upLoading ? (
+                <>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      my: '0.5rem',
+                    }}
+                  >
+                    <CircularProgress />
+                  </Box>
+                </>
+              ) : (
+                <>
+                  {imageUpload !== null && (
+                    <Box>
+                      <img
+                        src={imageUpload[0]?.url}
+                        alt='upload-img'
+                        style={{ height: '200px' }}
+                      />
+                    </Box>
+                  )}
+                </>
+              )}
+            </>
+            <>
+              <Box sx={{ width: matches ? '50%' : '25%', m: 'auto' }}>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={checked}
+                        onChange={(e) => setChecked(e.target.checked)}
+                        inputProps={{ 'aria-label': 'controlled' }}
+                      />
+                    }
+                    label='Public'
+                  ></FormControlLabel>
+                </FormGroup>
+              </Box>
+              <Button
+                variant='contained'
+                color='primary'
+                sx={{ my: '0.5rem' }}
+                fullWidth
+                onClick={handleUploadingPost}
+              >
+                Upload
+              </Button>
+            </>
           </form>
-          <MobileStepper
-            variant='dots'
-            steps={2}
-            position='static'
-            activeStep={activeStep}
-            sx={{ maxWidth: 400, flexGrow: 1 }}
-            nextButton={
-              <Button
-                size='small'
-                onClick={handleNext}
-                disabled={activeStep === 5}
-              >
-                Next
-                {theme.direction === 'rtl' ? (
-                  <KeyboardArrowLeft />
-                ) : (
-                  <KeyboardArrowRight />
-                )}
-              </Button>
-            }
-            backButton={
-              <Button
-                size='small'
-                onClick={handleBack}
-                disabled={activeStep === 0}
-              >
-                {theme.direction === 'rtl' ? (
-                  <KeyboardArrowRight />
-                ) : (
-                  <KeyboardArrowLeft />
-                )}
-                Back
-              </Button>
-            }
-          />
         </Box>
       </Fade>
     </Modal>
