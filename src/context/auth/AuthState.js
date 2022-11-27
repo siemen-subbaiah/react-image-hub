@@ -2,6 +2,7 @@ import React from 'react';
 import { useReducer } from 'react';
 import { createContext } from 'react';
 import { reducer, initialState } from './AuthReducer';
+import { API_URL } from '../../config';
 
 export const AuthContext = createContext();
 
@@ -12,14 +13,11 @@ const AuthState = ({ children }) => {
   const signup = async (name, email, password) => {
     dispatch({ type: 'LOADING' });
     try {
-      const res = await fetch(
-        'https://quiet-springs-07494.herokuapp.com/auth/local/register',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: name, email, password }),
-        }
-      );
+      const res = await fetch(`${API_URL}/auth/local/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: name, email, password }),
+      });
       const data = await res.json();
       if (!res.ok) {
         dispatch({
@@ -40,14 +38,11 @@ const AuthState = ({ children }) => {
   const login = async (email, password) => {
     dispatch({ type: 'LOADING' });
     try {
-      const res = await fetch(
-        'https://quiet-springs-07494.herokuapp.com/auth/local',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ identifier: email, password }),
-        }
-      );
+      const res = await fetch(`${API_URL}/auth/local`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier: email, password }),
+      });
       const data = await res.json();
       if (!res.ok) {
         dispatch({
